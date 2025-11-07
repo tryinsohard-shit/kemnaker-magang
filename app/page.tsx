@@ -132,18 +132,17 @@ export default function Home() {
 
   const fetchFilteredVacancies = async (signal: AbortSignal) => {
     setLoading(true)
-    setCurrentPage(1) // Reset to page 1 when filters change
+    setCurrentPage(1)
     try {
       const params = new URLSearchParams()
 
       if (searchQuery.trim()) {
-        params.append("keyword", encodeURIComponent(searchQuery.trim()))
+        params.append("keyword", searchQuery.trim())
         params.append("page", "1")
-        params.append("limit", "1000") // Fetch all search results
+        params.append("limit", "1000")
       } else {
-        // Normal pagination for browse mode
         params.append("page", "1")
-        params.append("limit", "1000") // Fetch 1000 to get all for client-side pagination
+        params.append("limit", "1000")
       }
 
       params.append("order_by", orderBy)
@@ -154,14 +153,16 @@ export default function Home() {
       }
 
       const url = `https://maganghub.kemnaker.go.id/be/v1/api/list/vacancies-aktif?${params.toString()}`
+      console.log("[v0] Fetching URL:", url)
 
       const response = await fetch(url, { signal })
       const data: ApiResponse = await response.json()
 
+      console.log("[v0] API Response total:", data.total, "items:", data.data?.length)
+
       if (data.data) {
         let results = data.data
 
-        // Apply client-side filters for major and jenjang
         if (selectedMajors.length > 0) {
           results = results.filter((vacancy: Vacancy) => {
             const programs = parsePrograms(vacancy.program_studi)
@@ -176,15 +177,15 @@ export default function Home() {
           })
         }
 
+        setTotalVacancies(results.length)
         setAllFilteredVacancies(results)
-
         const startIdx = 0
         const endIdx = limit
         setDisplayVacancies(results.slice(startIdx, endIdx))
       }
     } catch (error) {
       if (error instanceof Error && error.name !== "AbortError") {
-        console.error("Error fetching vacancies:", error)
+        console.error("[v0] Error fetching vacancies:", error)
       }
     } finally {
       setLoading(false)
@@ -248,7 +249,7 @@ export default function Home() {
               limit={limit}
               onLimitChange={(newLimit) => {
                 setLimit(newLimit)
-                setCurrentPage(1) // Reset to page 1 when limit changes
+                setCurrentPage(1)
               }}
               orderBy={orderBy}
               onOrderByChange={setOrderBy}
