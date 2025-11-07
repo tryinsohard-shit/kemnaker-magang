@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react"
+import HeroSection from "@/components/hero-section"
 import VacancyFilters from "@/components/vacancy-filters"
 import VacancyCard from "@/components/vacancy-card"
 import SearchBar from "@/components/search-bar"
@@ -134,34 +135,35 @@ export default function Home() {
     setLoading(true)
     setCurrentPage(1)
     try {
+      const baseUrl = "https://maganghub.kemnaker.go.id/be/v1/api/list/vacancies-aktif"
       const params = new URLSearchParams()
 
       if (searchQuery.trim()) {
         params.append("keyword", searchQuery.trim())
-        params.append("page", "1")
-        params.append("limit", "1000")
-      } else {
-        params.append("page", "1")
-        params.append("limit", "1000")
       }
-
-      params.append("order_by", orderBy)
-      params.append("order_direction", orderDirection)
 
       if (selectedProvinces.length > 0) {
         params.append("kode_provinsi", selectedProvinces[0])
       }
 
-      const url = `https://maganghub.kemnaker.go.id/be/v1/api/list/vacancies-aktif?${params.toString()}`
+      params.append("order_by", orderBy)
+      params.append("order_direction", orderDirection)
+      params.append("page", "1")
+      params.append("limit", "1000")
+
+      const url = `${baseUrl}?${params.toString()}`
       console.log("[v0] Fetching URL:", url)
 
       const response = await fetch(url, { signal })
-      const data: ApiResponse = await response.json()
+      const data: any = await response.json()
 
-      console.log("[v0] API Response total:", data.total, "items:", data.data?.length)
+      const vacancies = Array.isArray(data) ? data : data.data || []
+      const total = data.total || data.length || vacancies.length
 
-      if (data.data) {
-        let results = data.data
+      console.log("[v0] API Response - total:", total, "items:", vacancies.length)
+
+      if (vacancies && vacancies.length > 0) {
+        let results = vacancies
 
         if (selectedMajors.length > 0) {
           results = results.filter((vacancy: Vacancy) => {
@@ -221,6 +223,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background">
+      <HeroSection />
+
       <header className="border-b border-border bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-4">
