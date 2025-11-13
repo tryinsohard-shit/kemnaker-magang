@@ -3,7 +3,14 @@
 import { useState, useEffect, useRef } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Loader2, ChevronLeft, ChevronRight } from "lucide-react"
+import { Loader2, ChevronLeft, ChevronRight, AlertCircle } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import HeroSection from "@/components/hero-section"
 import VacancyFilters from "@/components/vacancy-filters"
 import VacancyCard from "@/components/vacancy-card"
@@ -80,6 +87,20 @@ export default function Home() {
   const [orderBy, setOrderBy] = useState("jumlah_kuota")
   const [orderDirection, setOrderDirection] = useState<"ASC" | "DESC">("DESC")
   const abortControllerRef = useRef<AbortController | null>(null)
+  const [showWelcomeDialog, setShowWelcomeDialog] = useState(false)
+
+  // Show popup on first load
+  useEffect(() => {
+    const hasSeenPopup = sessionStorage.getItem("hasSeenPopup")
+    if (!hasSeenPopup) {
+      // Delay to show after splash screen
+      const timer = setTimeout(() => {
+        setShowWelcomeDialog(true)
+        sessionStorage.setItem("hasSeenPopup", "true")
+      }, 500)
+      return () => clearTimeout(timer)
+    }
+  }, [])
 
   useEffect(() => {
     const fetchOptionsData = async () => {
@@ -221,6 +242,25 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <Dialog open={showWelcomeDialog} onOpenChange={setShowWelcomeDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <AlertCircle className="h-5 w-5 text-yellow-500" />
+              Pemberitahuan
+            </DialogTitle>
+            <DialogDescription className="text-left pt-4">
+              Better gunakan filter search atau fitur filter jurusan dan lokasi karena yang tampil ketika pertama buka masih error, males benerin dah
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end">
+            <Button onClick={() => setShowWelcomeDialog(false)}>
+              Oke, Paham
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <main className="flex-1">
       <HeroSection />
 
