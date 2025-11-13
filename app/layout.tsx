@@ -8,26 +8,8 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Lowongan Magang - Platform Alternatif",
-  description: "Cari lowongan magang berdasarkan jurusan Anda dengan mudah",
-  generator: "v0.app",
-  icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
-  },
+  title: "Alternate Intern Kemnaker - Lowongan Magang",
+  description: "Platform alternatif untuk menemukan lowongan magang dari Kementerian Ketenagakerjaan RI",
 }
 
 export default function RootLayout({

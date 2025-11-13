@@ -23,10 +23,10 @@ export default function Footer() {
     <footer className="mt-auto border-t bg-card">
       <div className="relative">
         {/* Tape Decorations */}
-        <div className="hidden md:block absolute top-4 left-8 w-20 h-16 -rotate-12 opacity-60">
+        <div className="hidden md:block absolute -top-6 left-12 w-24 h-20 -rotate-[25deg] opacity-70 z-10">
           <TapeSVG />
         </div>
-        <div className="hidden md:block absolute top-4 right-8 w-20 h-16 rotate-12 opacity-60">
+        <div className="hidden md:block absolute -top-8 right-12 w-24 h-20 rotate-[25deg] opacity-70 z-10">
           <TapeSVG />
         </div>
 
@@ -64,7 +64,7 @@ export default function Footer() {
 
           {/* Resources */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-foreground">Sumber Daya</h4>
+            <h4 className="text-sm font-semibold text-foreground">Resource</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link

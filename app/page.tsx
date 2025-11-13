@@ -153,15 +153,12 @@ export default function Home() {
       params.append("limit", "1000")
 
       const url = `${baseUrl}?${params.toString()}`
-      console.log("[v0] Fetching URL:", url)
 
       const response = await fetch(url, { signal })
       const data: any = await response.json()
 
       const vacancies = Array.isArray(data) ? data : data.data || []
       const total = data.total || data.length || vacancies.length
-
-      console.log("[v0] API Response - total:", total, "items:", vacancies.length)
 
       if (vacancies && vacancies.length > 0) {
         let results = vacancies
