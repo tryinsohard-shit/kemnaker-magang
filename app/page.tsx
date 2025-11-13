@@ -8,6 +8,7 @@ import HeroSection from "@/components/hero-section"
 import VacancyFilters from "@/components/vacancy-filters"
 import VacancyCard from "@/components/vacancy-card"
 import SearchBar from "@/components/search-bar"
+import Footer from "@/components/footer"
 
 interface ProgramStudi {
   id: string
@@ -222,7 +223,8 @@ export default function Home() {
   const endNum = Math.min(currentPage * limit, allFilteredVacancies.length)
 
   return (
-    <main className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
+      <main className="flex-1">
       <HeroSection />
 
       <header className="border-b border-border bg-card">
@@ -343,6 +345,8 @@ export default function Home() {
           </section>
         </div>
       </div>
-    </main>
+      </main>
+      <Footer />
+    </div>
   )
 }
