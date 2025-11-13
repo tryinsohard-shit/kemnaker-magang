@@ -226,10 +226,10 @@ export default function Home() {
       <HeroSection />
 
       <header className="border-b border-border bg-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="mb-4">
-            <h1 className="text-3xl sm:text-4xl font-bold text-foreground">Lowongan Magang</h1>
-            <p className="text-sm sm:text-base text-muted-foreground mt-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Lowongan Magang</h1>
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1">
               Platform alternatif untuk menemukan kesempatan magang berdasarkan jurusan Anda dengan informasi lengkap
             </p>
           </div>
@@ -237,8 +237,8 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           <aside className="lg:col-span-1">
             <VacancyFilters
               majors={allMajors}
@@ -269,13 +269,16 @@ export default function Home() {
               </div>
             ) : (
               <>
-                <div className="mb-6">
-                  <p className="text-lg font-semibold text-foreground">
+                <div className="mb-4 bg-card border rounded-lg p-3">
+                  <p className="text-base font-semibold text-foreground">
                     Ditemukan <span className="text-primary">{allFilteredVacancies.length}</span> lowongan
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Menampilkan {startNum}-{endNum} dari {allFilteredVacancies.length} hasil
                   </p>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {displayVacancies.length > 0 ? (
                     <>
                       {displayVacancies.map((vacancy) => (
@@ -283,31 +286,35 @@ export default function Home() {
                       ))}
 
                       {totalPages > 1 && (
-                        <div className="flex items-center justify-center gap-2 pt-8">
+                        <div className="flex items-center justify-center gap-1 pt-6">
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                             disabled={currentPage === 1}
+                            className="text-xs"
                           >
-                            <ChevronLeft className="w-4 h-4" />
-                            Sebelumnya
+                            <ChevronLeft className="w-3 h-3" />
+                            Prev
                           </Button>
 
                           <div className="flex gap-1">
-                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                              <button
-                                key={page}
-                                onClick={() => setCurrentPage(page)}
-                                className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
-                                  currentPage === page
-                                    ? "bg-primary text-primary-foreground"
-                                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                                }`}
-                              >
-                                {page}
-                              </button>
-                            ))}
+                            {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+                              const pageNum = Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + i;
+                              return (
+                                <button
+                                  key={pageNum}
+                                  onClick={() => setCurrentPage(pageNum)}
+                                  className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+                                    currentPage === pageNum
+                                      ? "bg-primary text-primary-foreground"
+                                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                                  }`}
+                                >
+                                  {pageNum}
+                                </button>
+                              );
+                            })}
                           </div>
 
                           <Button
@@ -315,9 +322,10 @@ export default function Home() {
                             size="sm"
                             onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                             disabled={currentPage === totalPages}
+                            className="text-xs"
                           >
-                            Selanjutnya
-                            <ChevronRight className="w-4 h-4" />
+                            Next
+                            <ChevronRight className="w-3 h-3" />
                           </Button>
                         </div>
                       )}

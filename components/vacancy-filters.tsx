@@ -159,6 +159,7 @@ export default function VacancyFilters({
               className="w-full px-3 py-2 border border-input bg-background rounded-md text-sm"
             >
               <option value="jumlah_kuota">Jumlah Kuota</option>
+              <option value="jumlah_terdaftar">Jumlah Pendaftar</option>
               <option value="nama_perusahaan">Nama Perusahaan</option>
               <option value="created_at">Tanggal Posting Terbaru</option>
               <option value="posisi">Nama Posisi</option>

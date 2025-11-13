@@ -15,7 +15,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="relative w-full h-[600px] sm:h-[700px] lg:h-[800px] overflow-hidden">
+    <section className="relative w-full h-[450px] sm:h-[500px] lg:h-[550px] overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
@@ -39,7 +39,7 @@ export default function HeroSection() {
         }}
       >
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-3 sm:mb-4 leading-tight tracking-tight">
             Alternate Intern
             <br />
             <span className="relative inline-block">
@@ -49,12 +49,12 @@ export default function HeroSection() {
             </span>
           </h1>
 
-          <p className="text-lg sm:text-xl lg:text-2xl text-amber-50 font-light italic max-w-xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-xl text-amber-50 font-light italic max-w-xl mx-auto">
             Platform alternatif menemukan intern kemnaker
           </p>
 
-          <div className="mt-8 sm:mt-12">
-            <p className="text-sm sm:text-base text-amber-100 tracking-widest uppercase font-medium">ENJOY~</p>
+          <div className="mt-6 sm:mt-8">
+            <p className="text-xs sm:text-sm text-amber-100 tracking-widest uppercase font-medium">ENJOY~</p>
           </div>
         </div>
       </div>
