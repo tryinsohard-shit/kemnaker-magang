@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import { AnimatedSelect } from "@/components/ui/animated-select"
 import { ChevronDown } from "lucide-react"
 
 interface ProgramStudi {
@@ -149,50 +150,48 @@ export default function VacancyFilters({
       )}
 
       {/* Sorting Section */}
-      <FilterSection title="Urutkan" expanded={expandedSorting} onToggle={() => setExpandedSorting(!expandedSorting)}>
-        <div className="space-y-3">
-          <div>
-            <Label className="text-sm font-medium mb-2 block">Sortir Berdasarkan</Label>
-            <select
-              value={orderBy}
-              onChange={(e) => onOrderByChange(e.target.value)}
-              className="w-full px-3 py-2 border border-input bg-background rounded-md text-sm"
-            >
-              <option value="jumlah_kuota">Jumlah Kuota</option>
-              <option value="jumlah_terdaftar">Jumlah Pendaftar</option>
-              <option value="nama_perusahaan">Nama Perusahaan</option>
-              <option value="created_at">Tanggal Posting Terbaru</option>
-              <option value="posisi">Nama Posisi</option>
-            </select>
-          </div>
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base">Sortir Berdasarkan</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <AnimatedSelect
+            value={orderBy}
+            onValueChange={onOrderByChange}
+            placeholder="Pilih kriteria"
+            options={[
+              { value: "jumlah_kuota", label: "Jumlah Kuota" },
+              { value: "jumlah_terdaftar", label: "Jumlah Pendaftar" },
+              { value: "nama_perusahaan", label: "Nama Perusahaan" },
+              { value: "created_at", label: "Tanggal Posting Terbaru" },
+              { value: "posisi", label: "Nama Posisi" },
+            ]}
+          />
 
-          <div>
-            <Label className="text-sm font-medium mb-2 block">Urutan</Label>
-            <div className="flex gap-2">
-              <button
-                onClick={() => onOrderDirectionChange("DESC")}
-                className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  orderDirection === "DESC"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                }`}
-              >
-                Terbesar/Terbaru
-              </button>
-              <button
-                onClick={() => onOrderDirectionChange("ASC")}
-                className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  orderDirection === "ASC"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                }`}
-              >
-                Terkecil/Terlama
-              </button>
-            </div>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              onClick={() => onOrderDirectionChange("DESC")}
+              className={`px-2 py-2 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+                orderDirection === "DESC"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              }`}
+            >
+              Besar → Kecil
+            </button>
+            <button
+              onClick={() => onOrderDirectionChange("ASC")}
+              className={`px-2 py-2 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+                orderDirection === "ASC"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+              }`}
+            >
+              Kecil → Besar
+            </button>
           </div>
-        </div>
-      </FilterSection>
+        </CardContent>
+      </Card>
 
       {/* Jenjang Filter */}
       <FilterSection
